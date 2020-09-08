@@ -8,7 +8,7 @@ inputButton.addEventListener('click', parseInputField);
 
 function parseInputField() {
   if (inputField.value) {
-    outputItems = inputField.value.split(',');
+    outputItems = inputField.value.split(', ');
     outputItems = shuffle(outputItems)
     generateOutputItems();
   } else {
