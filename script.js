@@ -21,8 +21,6 @@ function parseInputField() {
         filteredOutputItems.push(element);
       }
     });
-    console.log(filteredOutputItems);
-
     if (filteredOutputItems.length < 2) {
       replaceOutputItems('No magic needed. You already know the answer.');
     } else {
