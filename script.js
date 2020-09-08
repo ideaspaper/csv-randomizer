@@ -1,62 +1,59 @@
-let inputField = document.getElementById('input-field');
-let inputButton = document.getElementById('input-button');
-let outputField = document.getElementById('output-field');
+let inField = document.getElementById('input-field');
+let inButton = document.getElementById('input-button');
+let outField = document.getElementById('output-field');
 
-let outputItems = [];
+let outItems = [];
 
-inputButton.addEventListener('click', parseInputField);
+inButton.addEventListener('click', parseInField);
 
-function parseInputField() {
-  let striped = inputField.value.replace(/\s/g, '');
-  striped = striped.replace(/,/g,'');
-
+function parseInField() {
+  let striped = inField.value.replace(/\s/g, '');
+  striped = striped.replace(/,/g, '');
   if (striped) {
-    outputItems = inputField.value.split(',');
-    let mappedOutputItems = outputItems.map((element) => {
+    outItems = inField.value.split(',');
+    let mappedOutputItems = outItems.map((element) => {
       return element.replace(/\s/g, '');
     });
     let filteredOutputItems = [];
-    outputItems.forEach((element, index) => {
+    outItems.forEach((element, index) => {
       if (mappedOutputItems[index]) {
         filteredOutputItems.push(element);
       }
     });
     if (filteredOutputItems.length < 2) {
-      replaceOutputItems('No magic needed. You already know the answer.');
+      replaceOutItems('No magic needed. You already know the answer.');
     } else {
-      outputItems = shuffle(filteredOutputItems)
-    generateOutputItems();
+      outItems = shuffle(filteredOutputItems)
+      generateOutItems();
     }
   } else {
-    replaceOutputItems('Low on mana, cannot cast magic!');
+    replaceOutItems('Low on mana, cannot cast magic!');
   }
 }
 
-function replaceOutputItems(text) {
-  outputField.innerHTML = '';
-  outputField.innerHTML = `${text}`;
+function replaceOutItems(text) {
+  outField.innerHTML = '';
+  outField.innerHTML = `${text}`;
 }
 
-function generateOutputItems() {
-  outputField.innerHTML = '';
-  outputItems.forEach((element, index) => {
-    outputField.innerHTML += createOutputItem(index, element);
+function generateOutItems() {
+  outField.innerHTML = '';
+  outItems.forEach((element, index) => {
+    outField.innerHTML += createOutItem(index, element);
   });
 }
 
-function createOutputItem(id, text) {
-  return `<li class="output-item" id="li-item-${id}">${text}</li>`
+function createOutItem(id, text) {
+  return `<li class="output-item">${text}</li>`
 }
 
 function shuffle(array) {
-  let currentIndex = array.length;
-  let randomIndex;
-
-  while (0 !== currentIndex) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  let currIndex = array.length;
+  let randIndex;
+  while (0 !== currIndex) {
+    randIndex = Math.floor(Math.random() * currIndex);
+    currIndex -= 1;
+    [array[currIndex], array[randIndex]] = [array[randIndex], array[currIndex]];
   }
-
   return array;
 }
