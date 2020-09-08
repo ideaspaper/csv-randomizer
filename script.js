@@ -7,18 +7,36 @@ let outputItems = [];
 inputButton.addEventListener('click', parseInputField);
 
 function parseInputField() {
-  if (inputField.value) {
-    outputItems = inputField.value.split(', ');
-    outputItems = shuffle(outputItems)
+  let striped = inputField.value.replace(/\s/g, '');
+  striped = striped.replace(/,/g,'');
+
+  if (striped) {
+    outputItems = inputField.value.split(',');
+    let mappedOutputItems = outputItems.map((element) => {
+      return element.replace(/\s/g, '');
+    });
+    let filteredOutputItems = [];
+    outputItems.forEach((element, index) => {
+      if (mappedOutputItems[index]) {
+        filteredOutputItems.push(element);
+      }
+    });
+    console.log(filteredOutputItems);
+
+    if (filteredOutputItems.length < 2) {
+      replaceOutputItems('No magic needed. You already know the answer.');
+    } else {
+      outputItems = shuffle(filteredOutputItems)
     generateOutputItems();
+    }
   } else {
-    clearOutputItems();
+    replaceOutputItems('Low on mana, cannot cast magic!');
   }
 }
 
-function clearOutputItems() {
+function replaceOutputItems(text) {
   outputField.innerHTML = '';
-  outputField.innerHTML = 'Y U INPUT NO TEXT?';
+  outputField.innerHTML = `${text}`;
 }
 
 function generateOutputItems() {
